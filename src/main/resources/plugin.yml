@@ -1,0 +1,5 @@
+name: hAuth
+version: 1.5
+main: me.resently.hauth.hAuth
+authors: [Resently]
+description: Authentication plugin crafted with <3
