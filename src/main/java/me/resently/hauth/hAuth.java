@@ -24,7 +24,7 @@ public final class hAuth extends JavaPlugin {
         // Plugin startup logic
         Bukkit.getConsoleSender().sendMessage("");
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "   __ _____ ");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "  / // / _ |" + ChatColor.GREEN + "    hAuth 1.5");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "  / // / _ |" + ChatColor.GREEN + "    hAuth " + this.getDescription().getVersion());
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + " / _  / __ |" + ChatColor.DARK_GRAY + "    by Resently");
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "/_//_/_/ |_|");
 
