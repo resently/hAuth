@@ -19,7 +19,7 @@ public final class hAuth extends JavaPlugin {
             }else{
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + this.getDescription().getName() + " has an update available");
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Latest version is " + this.getDescription().getName() +" " + version);
-                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Please update here" + "https://www.spigotmc.org/resources/hauth.80862/");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Please update here" + "https://www.spigotmc.org/resources/hauth.80861/");
             }
         });
 
