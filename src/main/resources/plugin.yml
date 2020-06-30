@@ -1,5 +1,5 @@
 name: hAuth
-version: 1.5
+version: ${project.version}
 main: me.resently.hauth.hAuth
 authors: [Resently]
 description: Authentication plugin crafted with <3
