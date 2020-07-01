@@ -6,7 +6,7 @@
 
     <groupId>me.resently.com</groupId>
     <artifactId>hAuth</artifactId>
-    <version>1.4</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>hAuth</name>
@@ -70,6 +70,16 @@
             <artifactId>spigot-api</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.warrenstrange</groupId>
+            <artifactId>googleauth</artifactId>
+            <version>1.1.2</version>
         </dependency>
     </dependencies>
 </project>

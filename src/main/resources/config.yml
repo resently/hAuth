@@ -3,3 +3,6 @@
 #########
 Inventory_Title: '&aSelect the green panel'
 Permissions: hauth.bypass - Bypass on join authentication
+inventory-auth: true
+2FA-users: false
+2FA-staff: true

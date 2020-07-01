@@ -31,28 +31,30 @@ public class Events implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        if (!player.hasPermission("hauth.bypass")) {
-            String InvTitle = ChatColor.translateAlternateColorCodes('&', Plugin.getConfig().getString("Inventory_Title"));
-            if (!JoinedList.contains(player)){
-                JoinList.add(player);
+        if (Plugin.getConfig().getBoolean("inventory-auth")){
+            if (!player.hasPermission("hauth.bypass")) {
+                String InvTitle = ChatColor.translateAlternateColorCodes('&', Plugin.getConfig().getString("Inventory_Title"));
+                if (!JoinedList.contains(player)){
+                    JoinList.add(player);
 
-                if (Plugin.getConfig().getString("Inventory_Title") != null){
-                    Inventory AuthInv = Bukkit.createInventory(player, 27, InvTitle);
-                    ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)5);
-                    ItemMeta glassm = glass.getItemMeta();
-                    glassm.setDisplayName(ChatColor.GREEN + "Click me");
-                    glass.setItemMeta(glassm);
-                    Random r = new Random();
-                    int o = r.nextInt(25)+1;
-                    AuthInv.setItem(o, glass);
-                    (new BukkitRunnable() {
-                        @Override
-                        public void run() {
-                            player.openInventory(AuthInv);
-                        }
-                    }).runTaskLater(this.Plugin, 1L);
-                }else{
-                    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "ERROR: Check your config.yml file, Inventory title can't be null/in blank");
+                    if (Plugin.getConfig().getString("Inventory_Title") != null){
+                        Inventory AuthInv = Bukkit.createInventory(player, 27, InvTitle);
+                        ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)5);
+                        ItemMeta glassm = glass.getItemMeta();
+                        glassm.setDisplayName(ChatColor.GREEN + "Click me");
+                        glass.setItemMeta(glassm);
+                        Random r = new Random();
+                        int o = r.nextInt(25)+1;
+                        AuthInv.setItem(o, glass);
+                        (new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                player.openInventory(AuthInv);
+                            }
+                        }).runTaskLater(this.Plugin, 1L);
+                    }else{
+                        Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "ERROR: Check your config.yml file, Inventory title can't be null/in blank");
+                    }
                 }
             }
         }
@@ -67,44 +69,48 @@ public class Events implements Listener {
     @EventHandler
     public void clickInventory(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
-        if (JoinList.contains(player)) {
-            String InvTitle = ChatColor.translateAlternateColorCodes('&', Plugin.getConfig().getString("Inventory_Title"));
-            Inventory AuthInv = Bukkit.createInventory(player, 27, InvTitle);
-            if (e.getCurrentItem().getType() == Material.STAINED_GLASS_PANE) {
-                JoinList.remove(player);
-                AuthInv.remove(Material.STAINED_GLASS_PANE);
-                player.closeInventory();
-                JoinedList.add(player);
-            }else {
+        if (Plugin.getConfig().getBoolean("inventory-auth")){
+            if (JoinList.contains(player)) {
+                String InvTitle = ChatColor.translateAlternateColorCodes('&', Plugin.getConfig().getString("Inventory_Title"));
+                Inventory AuthInv = Bukkit.createInventory(player, 27, InvTitle);
+                if (e.getCurrentItem().getType() == Material.STAINED_GLASS_PANE) {
+                    JoinList.remove(player);
+                    AuthInv.remove(Material.STAINED_GLASS_PANE);
+                    player.closeInventory();
+                    JoinedList.add(player);
+                }else {
+                    e.setCancelled(true);
+                }
                 e.setCancelled(true);
             }
-            e.setCancelled(true);
         }
     }
 
     @EventHandler
     public void invClose(InventoryCloseEvent e) {
         Player player = (Player) e.getPlayer();
-        if (JoinList.contains(player)) {
-            String InvTitle = ChatColor.translateAlternateColorCodes('&', Plugin.getConfig().getString("Inventory_Title"));
-            if (Plugin.getConfig().getString("Inventory_Title") != null){
-                Inventory AuthInv = Bukkit.createInventory(player, 27, InvTitle);
-                (new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        AuthInv.remove(Material.STAINED_GLASS_PANE);
-                        ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)5);
-                        ItemMeta glassm = glass.getItemMeta();
-                        glassm.setDisplayName(ChatColor.GREEN + "Click me");
-                        Random r = new Random();
-                        int o = r.nextInt(25)+1;
-                        glass.setItemMeta(glassm);
-                        AuthInv.setItem(o, glass);
-                        player.openInventory(AuthInv);
-                    }
-                }).runTaskLater(this.Plugin, 1L);
-            }else{
-                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "ERROR: Check your config.yml file, Inventory title can't be null/in blank");
+        if (Plugin.getConfig().getBoolean("inventory-auth")){
+            if (JoinList.contains(player)) {
+                String InvTitle = ChatColor.translateAlternateColorCodes('&', Plugin.getConfig().getString("Inventory_Title"));
+                if (Plugin.getConfig().getString("Inventory_Title") != null){
+                    Inventory AuthInv = Bukkit.createInventory(player, 27, InvTitle);
+                    (new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            AuthInv.remove(Material.STAINED_GLASS_PANE);
+                            ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)5);
+                            ItemMeta glassm = glass.getItemMeta();
+                            glassm.setDisplayName(ChatColor.GREEN + "Click me");
+                            Random r = new Random();
+                            int o = r.nextInt(25)+1;
+                            glass.setItemMeta(glassm);
+                            AuthInv.setItem(o, glass);
+                            player.openInventory(AuthInv);
+                        }
+                    }).runTaskLater(this.Plugin, 1L);
+                }else{
+                    Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "ERROR: Check your config.yml file, Inventory title can't be null/in blank");
+                }
             }
         }
     }
