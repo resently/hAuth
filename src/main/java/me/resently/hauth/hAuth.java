@@ -1,6 +1,7 @@
 package me.resently.hauth;
 
 import me.resently.hauth.events.Events;
+import me.resently.hauth.events.TwoFA;
 import me.resently.hauth.manager.ConfigManager;
 import me.resently.hauth.utils.UpdateChecker;
 import org.bukkit.Bukkit;
@@ -44,6 +45,7 @@ public final class hAuth extends JavaPlugin {
 
     public void registerEvents(){
         pm.registerEvents(new Events(this), this);
+        pm.registerEvents(new TwoFA(this), this);
     }
 
     public void loadConfig(){
