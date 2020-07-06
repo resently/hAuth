@@ -29,18 +29,20 @@ public class TwoFA implements Listener {
     public void onJoin(PlayerJoinEvent e){
         if (plugin.getConfig().getBoolean("2FA-users")){
             Player player = e.getPlayer();
-            if (!plugin.getconfigManager.getUserData().contains("authcodes." + player.getUniqueId())){
-                GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
-                GoogleAuthenticatorKey googleAuthenticatorKey = googleAuthenticator.createCredentials();
+            if (!player.hasPlayedBefore()) {
+                if (!plugin.getconfigManager.getUserData().contains("authcodes." + player.getUniqueId())) {
+                    GoogleAuthenticator googleAuthenticator = new GoogleAuthenticator();
+                    GoogleAuthenticatorKey googleAuthenticatorKey = googleAuthenticator.createCredentials();
 
-                player.sendMessage(ChatColor.GREEN + "Your Google authenticator code is : " + googleAuthenticatorKey.getKey());
-                player.sendMessage(ChatColor.YELLOW + "Please enter this code in the Google Authenticator App before leaving the server");
+                    player.sendMessage(ChatColor.GREEN + "Your Google authenticator code is : " + googleAuthenticatorKey.getKey());
+                    player.sendMessage(ChatColor.YELLOW + "Please enter this code in the Google Authenticator App before leaving the server");
 
-                plugin.getconfigManager.getUserData().set("authcodes." + player.getUniqueId(), googleAuthenticatorKey.getKey());
-                plugin.getconfigManager.saveuserdata();
-            }else {
-                locked.add(player.getUniqueId());
-                player.sendMessage(ChatColor.RED + "Open Google Authenticator app and provide the code!");
+                    plugin.getconfigManager.getUserData().set("authcodes." + player.getUniqueId(), googleAuthenticatorKey.getKey());
+                    plugin.getconfigManager.saveuserdata();
+                } else {
+                    locked.add(player.getUniqueId());
+                    player.sendMessage(ChatColor.RED + "Open Google Authenticator app and provide the code!");
+                }
             }
         }
 
